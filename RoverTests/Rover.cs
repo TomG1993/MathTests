@@ -6,22 +6,13 @@ namespace RoverTests
 {
     public class Direction
     {
-        public string current;
-        public string rightTurn;
-        public string leftTurn;
-        public string right()
-        {
-            return rightTurn;
-        }
-
-        public string left()
-        {
-            return leftTurn;
-        }
+        public string current { get; set; }
+        public string rightTurn { get; set; }
+        public string leftTurn { get; set; }
     }
     public class Rover
     {
-        private string direction;
+        private Direction direction;
         private int xAxis;
         private int yAxis;
 
@@ -55,7 +46,12 @@ namespace RoverTests
 
         public Rover()
         {
-            direction = "N";
+            direction = new Direction()
+            {
+                current = "N",
+                rightTurn = "E",
+                leftTurn = "W",
+            };
             xAxis = 0;
             yAxis = 0;
         }
@@ -76,18 +72,18 @@ namespace RoverTests
                 }
                 else if (c == 'M')
                 {
-                    if (direction == "N")
+                    if (direction.current == "N")
                     {
                         yAxis++;
                     }
-                    if (direction == "S")
+                    if (direction.current == "S")
                     {
                         yAxis--;
                     }
-                    if (direction == "E")
+                    if (direction.current == "E")
                         xAxis++;
 
-                    if (direction == "W")
+                    if (direction.current == "W")
                     {
                         xAxis--;
                     }
@@ -95,7 +91,7 @@ namespace RoverTests
 
             }
 
-            return xAxis + ":" + yAxis + ":" + direction;
+            return xAxis + ":" + yAxis + ":" + direction.current;
         }
 
         private int moveXAxis()
@@ -108,26 +104,26 @@ namespace RoverTests
             return yAxis + 1;
         }
 
-        private string rotateLeft()
+        private Direction rotateLeft()
         {
-            var currentDirection = directions.FirstOrDefault(x => x.current == direction);
+            var currentDirection = directions.FirstOrDefault(x => x.current == direction.current);
             if (currentDirection != null)
             {
-                return currentDirection.leftTurn;
+                return directions.FirstOrDefault(x => x.current == currentDirection.leftTurn);
             }
             // TODO: throw;
-            return "";
+            return null;
         }
 
-        private string rotateRight()
+        private Direction rotateRight()
         {
-            var currentDirection = directions.FirstOrDefault(x => x.current == direction);
+            var currentDirection = directions.FirstOrDefault(x => x.current == direction.current);
             if (currentDirection != null)
             {
-                return currentDirection.rightTurn;
+                return directions.FirstOrDefault(x => x.current == currentDirection.rightTurn);
             }
             // TODO: throw;
-            return "";
+            return null;
         }
     }
 }
