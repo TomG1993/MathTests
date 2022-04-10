@@ -9,6 +9,9 @@ namespace MathTest
         public void return_a_square_root()
         {
             Assert.AreEqual(4, MathRoot.SquareRoot(16));
+
+            Assert.AreEqual(3, MathRoot.SquareRoot(9));
+
         }
     }
 }
